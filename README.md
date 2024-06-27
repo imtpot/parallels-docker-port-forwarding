@@ -15,6 +15,38 @@ Parallels Docker Port Forwarding is a service that automatically manages port fo
 - [Poetry](https://python-poetry.org/docs/#installation)
 - [Docker SDK for Python](https://docker-py.readthedocs.io/en/stable/)
 - Parallels Desktop with `prlctl` and `prlsrvctl` command-line tools
+- Docker configured to accept TCP connections on the VM
+
+## Setting up Docker to accept TCP connections on the VM
+
+1. **Edit the Docker service configuration file**:
+
+   Open the Docker service configuration file in your VM. This is usually located at `/lib/systemd/system/docker.service`.
+
+   ```bash
+   sudo nano /lib/systemd/system/docker.service
+   ```
+
+2. **Modify the `ExecStart` line**:
+
+   Find the line that starts with `ExecStart` and modify it to include the `-H tcp://0.0.0.0:2375` option. It should look something like this:
+
+   ```bash
+   ExecStart=/usr/bin/dockerd -H fd:// -H tcp://0.0.0.0:2375
+   ```
+
+3. **Reload the systemd configuration and restart Docker**:
+
+   ```bash
+   sudo systemctl daemon-reload
+   sudo systemctl restart docker
+   ```
+
+4. **Verify that Docker is listening on TCP port 2375**:
+
+   ```bash
+   sudo netstat -tlpn | grep dockerd
+   ```
 
 ## Installation
 
