@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "parallels-docker-port-forwarding"
-version = "0.1.0"
+version = "0.1.1"
 description = "A Docker container port forwarding service for Parallels"
 authors = ["imtpot <muse-buzz.0@icloud.com>"]
 license = "MIT"
